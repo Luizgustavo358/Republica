@@ -62,12 +62,13 @@ public class ControleDeRepublicas
         System.out.println("\n\nCADASTRO DE REPUBLICAS\n");
         System.out.println("-----------------------------\n");
         System.out.println("Republica               USUÁRIOS               TAREFAS");
-        System.out.println("10 - Listar                20 - Listar                30 - Listar");
-        System.out.println("11 - Incluir              21 - Incluir              31 - Incluir");
-        System.out.println("12 - Alterar             22 - Alterar            32 - Alterar");
-        System.out.println("13 - Excluir             23 - Excluir             33 - Excluir");
-        System.out.println("14 - Buscar por código     24 - Buscar por código     34 - Buscar por código");
-        System.out.println("15 - Buscar por nome     25 - Buscar por nome       35 - Buscar por nome");
+        System.out.println("10 - Listar             20 - Listar            30 - Listar");
+        System.out.println("11 - Incluir            21 - Incluir           31 - Incluir");
+        System.out.println("12 - Alterar            22 - Alterar           32 - Alterar");
+        System.out.println("13 - Excluir            23 - Excluir           33 - Excluir");
+        System.out.println("14 - Buscar por código  24 - Buscar por código 34 - Buscar por código");
+        System.out.println("15 - Buscar por nome    25 - Buscar por nome   35 - Buscar por nome");
+
         System.out.println("\n41 - Lista de usuarios de uma republica");
         System.out.println("42 - Lista de republicas de um usuario");
 
