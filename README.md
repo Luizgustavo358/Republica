@@ -1,6 +1,7 @@
 # Republica
 
 Trabalho de Algoritmos e Estrutura de Dados 3 (AED3) - PUC Minas.
+
 **Professor**: Marcos André Silveira Kutova
 
 Grupo:
