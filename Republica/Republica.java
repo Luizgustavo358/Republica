@@ -44,7 +44,8 @@ public class Republica implements Registro
 
       public String toString( )
       {
-            return "\nCódigo..........:" + codigo           +
+            return 
+            "\nCódigo.........:" + codigo           +
             "\nNome...........:" + nome             +
             "\nProprietário...:" + nomeProprietario +
             "\nEndereco.......:" + endereco         +

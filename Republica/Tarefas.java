@@ -69,12 +69,13 @@ public class Tarefas implements Registro
 
       public String toString( )
       {
-            return "\nCodigo................:" + idTarefa    +
-            "\nTarefa.................:" + nomeTarefa  +
-            "\nDescricao...........:" + descricao   +
-            "\nResponsavel.......:" + responsavel +
+            return 
+            "\nCodigo...........:" + idTarefa    +
+            "\nTarefa...........:" + nomeTarefa  +
+            "\nDescricao........:" + descricao   +
+            "\nResponsavel......:" + responsavel +
             "\nTempo Limite.....:" + tempoLimite +
-            "\nRealizado............:" + realizado;
+            "\nRealizado........:" + realizado;
       }// end toString( )
 
       public byte[] getByteArray( ) throws IOException
@@ -114,7 +115,6 @@ public class Tarefas implements Registro
 
       /*
       public int compareTo( Object b ) {
-      return nome.compareTo(((Usuario)b).nome);
-}
-*/
+            return nome.compareTo(((Usuario)b).nome);
+      }*/
 }// end class Tarefas
