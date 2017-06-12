@@ -28,4 +28,4 @@ $ java ControleDeRepublicas
 ```
 
 ### Programa Rodando
-![alt text](https://raw.githubusercontent.com/Luizgustavo358/Republica/tree/master/imagem/terminal.png)
+![alt text](https://raw.githubusercontent.com/Luizgustavo358/Republica/tree/master/imagem/to/terminal.png)
