@@ -11,20 +11,20 @@ public class Republica implements Registro
 
       public Republica(int c, String n, String np, String e, float p)
       {
-            codigo = c;
-            nome = n;
+            codigo           = c;
+            nome             = n;
             nomeProprietario = np;
-            endereco = e;
-            preco = p;
+            endereco         = e;
+            preco            = p;
       }// end construtor
 
       public Republica( )
       {
-            codigo = 0;
-            nome = "";
+            codigo           = 0;
+            nome             = "";
             nomeProprietario = "";
-            endereco = "";
-            preco = 0;
+            endereco         = "";
+            preco            = 0;
       }// end construtor
 
       public void setCodigo(int c)
@@ -44,12 +44,11 @@ public class Republica implements Registro
 
       public String toString( )
       {
-            return 
-            "\nCódigo.........:" + codigo           +
-            "\nNome...........:" + nome             +
-            "\nProprietário...:" + nomeProprietario +
-            "\nEndereco.......:" + endereco         +
-            "\nPreço..........:" + preco;
+            return "\nCódigo.........:" + codigo           +
+                   "\nNome...........:" + nome             +
+                   "\nProprietário...:" + nomeProprietario +
+                   "\nEndereco.......:" + endereco         +
+                   "\nPreço..........:" + preco;
       }// end toString( )
 
       public byte[] getByteArray( ) throws IOException
@@ -87,7 +86,6 @@ public class Republica implements Registro
 
       /*
       public int compareTo( Object b ) {
-      return nome.compareTo(((Republica)b).nome);
-}
-*/
+            return nome.compareTo(((Republica)b).nome);
+      }*/
 }// end class Republica

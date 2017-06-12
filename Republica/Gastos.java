@@ -13,19 +13,19 @@ public class Gastos implements Registro
 
       public Gastos(String n, float v, String d, String desc, int codigo)
       {
-            nomeGasto = n;
-            valor     = v;
-            data      = d;
-            descricao = desc;
+            nomeGasto   = n;
+            valor       = v;
+            data        = d;
+            descricao   = desc;
             codigoGasto = codigo;
       }// end construtor
 
       public Gastos( )
       {
-            nomeGasto = "";
-            valor = 0;
-            data = "";
-            descricao = "";
+            nomeGasto   = "";
+            valor       = 0;
+            data        = "";
+            descricao   = "";
             codigoGasto = 0;
       }// end construtor
 
@@ -47,12 +47,12 @@ public class Gastos implements Registro
       public String getData( )
       {
             return data;
-      }
+      }// end getData( )
 
       public String getDescricao( )
       {
             return descricao;
-      }
+      }// end getDescricao( )
 
       public String getString( )
       {
@@ -62,9 +62,9 @@ public class Gastos implements Registro
       public String toString( )
       {
             return "\nNome Gasto.......:" + nomeGasto +
-            "\nValor............:" + valor     +
-            "\nData.............:" + data      +
-            "\nDescricao........:" + descricao;
+                   "\nValor............:" + valor     +
+                   "\nData.............:" + data      +
+                   "\nDescricao........:" + descricao;
       }// end toString( )
 
       public byte[] getByteArray( ) throws IOException
@@ -100,7 +100,6 @@ public class Gastos implements Registro
 
       /*
       public int compareTo( Object b ) {
-      return nome.compareTo(((Usuario)b).nome);
-}
-*/
+            return nome.compareTo(((Usuario)b).nome);
+      }*/
 }// end class Gastos

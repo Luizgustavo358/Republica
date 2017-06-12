@@ -6,7 +6,7 @@ public interface Registro extends Comparable, Cloneable
 
       public int getCodigo( );
 
-      public String getString( );   // retorna um campo string qualquer (nome, título, descricao, etc.)
+      public String getString( ); // retorna um campo string qualquer (nome, título, descricao, etc.)
 
       public byte[] getByteArray( ) throws IOException;
 

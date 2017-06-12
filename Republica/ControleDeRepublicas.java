@@ -39,10 +39,10 @@ public class ControleDeRepublicas
   {
     try
     {
-      arqRepublica  = new ArquivoIndexado<>(Republica.class, "Republicas.db", "Republicas1.idx", "Republicas2.idx");
-      arqUsuarios = new ArquivoIndexado<>(Usuario.class  , "Usuarios.db"  , "Usuarios1.idx"  , "Usuarios2.idx"  );
-      arqTarefas  = new ArquivoIndexado<>(Tarefas.class  , "Tarefas.db"   , "Tarefas1.idx"   , "Tarefas2.idx"   );
-      arqGastos = new ArquivoIndexado<>(Gastos.class   , "Gastos.db"    , "Gastos1.idx"    , "Gastos2.idx"    );
+      arqRepublica = new ArquivoIndexado<>(Republica.class, "Republicas.db", "Republicas1.idx", "Republicas2.idx");
+      arqUsuarios  = new ArquivoIndexado<>(Usuario.class  , "Usuarios.db"  , "Usuarios1.idx"  , "Usuarios2.idx"  );
+      arqTarefas   = new ArquivoIndexado<>(Tarefas.class  , "Tarefas.db"   , "Tarefas1.idx"   , "Tarefas2.idx"   );
+      arqGastos    = new ArquivoIndexado<>(Gastos.class   , "Gastos.db"    , "Gastos1.idx"    , "Gastos2.idx"    );
 
       idxRepublicaUsuario = new ArvoreBMais (10, "republica_usuario.idx");
       idxUsuarioRepublica = new ArvoreBMais (10, "usuario_republica.idx");
@@ -59,8 +59,11 @@ public class ControleDeRepublicas
 
       do
       {
-        System.out.println("\n\nCADASTRO DE REPUBLICAS\n");
-        System.out.println("-----------------------------\n");
+        System.out.println("\n-------------------------------------------------------------------");
+        System.out.println("|\t\t\t\t\t\t\t\t  |");
+        System.out.println("|\t\t\tCADASTRO DE REPUBLICAS                    |");
+        System.out.println("|\t\t\t\t\t\t\t\t  |");
+        System.out.println("-------------------------------------------------------------------\n");
         System.out.println("Republica               USUÁRIOS               TAREFAS");
         System.out.println("10 - Listar             20 - Listar            30 - Listar");
         System.out.println("11 - Incluir            21 - Incluir           31 - Incluir");
@@ -82,11 +85,13 @@ public class ControleDeRepublicas
         System.out.println("\n98 - Povoar DB (republica)");
         System.out.println("\n99 - Reorganizar arquivos");
         System.out.println("0 - Sair");
+
         System.out.print("\nOpcao: ");
         opcao = Integer.valueOf(console.nextLine());
 
         switch(opcao)
         {
+          // Republica
           case 10: listarRepublica( ); break;
           case 11: incluirRepublica( ); break;
           case 12: alterarRepublica( ); break;
@@ -94,6 +99,7 @@ public class ControleDeRepublicas
           case 14: buscarRepublicaCodigo( ); break;
           case 15: buscarRepublicaNome( ); break;
 
+          // Usuario
           case 20: listarUsuarios( ); break;
           case 21: incluirUsuario( ); break;
           case 22: alterarUsuario( ); break;
@@ -101,6 +107,7 @@ public class ControleDeRepublicas
           case 24: buscarUsuarioCodigo( ); break;
           case 25: buscarUsuarioNome( ); break;
 
+          // Tarefas
           case 30: listarTarefas( ); break;
           case 31: incluirTarefa( ); break;
           case 32: alterarTarefa( ); break;
@@ -108,6 +115,7 @@ public class ControleDeRepublicas
           case 34: buscarTarefaCodigo( ); break;
           case 35: buscarTarefaDescricao( ); break;
 
+          // Listar
           case 41: listarUsuariosRepublica();break;
           case 42: listarRepublicasUsuario();break;
           case 43: listarUsuariosTarefa();break;
@@ -143,23 +151,27 @@ public class ControleDeRepublicas
     float preco;
 
     System.out.println("\nINCLUSÃO");
+
     System.out.print("Nome: ");
     nome = console.nextLine();
+
     System.out.print("Nome Proprietário: ");
     nomeProprietario = console.nextLine();
+
     System.out.print("Endereço: ");
     endereco = console.nextLine();
+
     System.out.print("Preço (mensal): ");
     preco = Float.valueOf(console.nextLine());
 
     System.out.print("\nConfirma inclusão? ");
     char confirma = console.nextLine().charAt(0);
 
-    if(confirma=='s' || confirma=='S')
+    if(confirma == 's' || confirma == 'S')
     {
       Republica r = new Republica(-1, nome, nomeProprietario, endereco, preco);
       int cod = arqRepublica.incluir(r);
-      System.out.println("Republica incluída com código: "+cod);
+      System.out.println("Republica incluída com código: " + cod);
     }// end if
   }// end incluirRepublica( )
 
@@ -172,12 +184,12 @@ public class ControleDeRepublicas
 
     codigo = Integer.valueOf(console.nextLine());
 
-    if(codigo <=0)
-    return;
+    if(codigo <= 0)
+      return;
 
     Republica r;
 
-    if((r = (Republica)arqRepublica.buscarCodigo(codigo))!=null)
+    if((r = (Republica)arqRepublica.buscarCodigo(codigo)) != null)
     {
       System.out.println(r);
 
@@ -185,31 +197,36 @@ public class ControleDeRepublicas
 
       System.out.print("\nNovo nome: ");
       nome = console.nextLine();
+
       System.out.print("\nNovo Proprietário: ");
       nomeProprietario = console.nextLine();
+
       System.out.print("Novo endereco: ");
       endereco = console.nextLine();
+
       System.out.print("Novo preço (mensal): ");
       preco = console.nextLine();
 
       System.out.print("\nConfirma alteração? ");
       char confirma = console.nextLine().charAt(0);
 
-      if(confirma=='s' || confirma=='S')
+      if(confirma == 's' || confirma == 'S')
       {
-        r.nome = (nome.length()>0?nome:r.nome);
-        r.nomeProprietario = (nomeProprietario.length() >0? nomeProprietario:r.nomeProprietario);
-        r.endereco = (endereco.length( ) > 0? endereco: r.endereco);
-        r.preco = (preco.length() > 0? Float.valueOf(preco):r.preco);
+        r.nome = (nome.length() > 0 ? nome: r.nome);
+        r.nomeProprietario = (nomeProprietario.length() > 0 ? nomeProprietario: r.nomeProprietario);
+        r.endereco = (endereco.length( ) > 0 ? endereco: r.endereco);
+        r.preco = (preco.length() > 0 ? Float.valueOf(preco): r.preco);
 
         if(arqRepublica.alterar(r))
-        System.out.println("Republica alterado.");
+          System.out.println("Republica alterado.");
         else
-        System.out.println("Republica não pode ser alterado.");
+          System.out.println("Republica não pode ser alterado.");
       }// end if
     }
     else
-    System.out.println("Republica não encontrado");
+    {
+      System.out.println("Republica não encontrado");
+    }// end if
   }// end alterarRepublica( )
 
   public static void excluirRepublica( ) throws Exception
@@ -220,26 +237,28 @@ public class ControleDeRepublicas
     System.out.print("Código: ");
     codigo = Integer.valueOf(console.nextLine());
 
-    if(codigo <=0)
-    return;
+    if(codigo <= 0)
+      return;
 
     Republica r;
-    if((r = (Republica)arqRepublica.buscarCodigo(codigo))!=null)
+    if((r = (Republica)arqRepublica.buscarCodigo(codigo)) != null)
     {
       System.out.println(r);
       System.out.print("\nConfirma exclusão? ");
       char confirma = console.nextLine().charAt(0);
 
-      if(confirma=='s' || confirma=='S')
+      if(confirma == 's' || confirma == 'S')
       {
-        if( arqRepublica.excluir(codigo) )
+        if(arqRepublica.excluir(codigo))
         {
           System.out.println("Republica excluído.");
-        }
-      }
+        }// end if
+      }// end if
     }
     else
-    System.out.println("Republica não encontrado");
+    {
+      System.out.println("Republica não encontrado");
+    }// end if
   }// end excluiRepublica( )
 
   public static void buscarRepublicaCodigo( ) throws Exception
@@ -250,14 +269,15 @@ public class ControleDeRepublicas
     System.out.print("Código: ");
     codigo = Integer.valueOf(console.nextLine());
 
-    if(codigo <=0)
-    return;
+    if(codigo <= 0)
+      return;
 
     Republica r;
+
     if((r = (Republica)arqRepublica.buscarCodigo(codigo))!=null)
-    System.out.println(r);
+      System.out.println(r);
     else
-    System.out.println("Republica não encontrado");
+      System.out.println("Republica não encontrado");
   }// end buscarRepublicaCodigo( )
 
   public static void buscarRepublicaNome( ) throws Exception
@@ -270,20 +290,21 @@ public class ControleDeRepublicas
     nome = console.nextLine();
 
     if(nome == "")
-    return;
+      return;
 
     Republica r;
+
     if((r = (Republica)arqRepublica.buscarString(nome))!=null)
-    System.out.println(r);
+      System.out.println(r);
     else
-    System.out.println("Republica não encontrado");
+      System.out.println("Republica não encontrado");
   }// end buscarRepublicaNome( )
 
   public static void reorganizarRepublica( ) throws Exception
   {
     arqRepublica.reorganizar();
     System.out.println("\nArquivo de Republicas reorganizado");
-  }// end reorganizar( )
+  }// end reorganizarRepublica( )
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -296,7 +317,7 @@ public class ControleDeRepublicas
     {
       System.out.println((Usuario)Usuario[i]);
     }// end for
-  }// end listarRepublica( )
+  }// end listarUsuarios( )
 
   public static void incluirUsuario( ) throws Exception
   {
@@ -304,12 +325,16 @@ public class ControleDeRepublicas
     boolean owner = false;
 
     System.out.println("\nINCLUSÃO");
+
     System.out.print("Nome: ");
     nome = console.nextLine();
+
     System.out.print("Email: ");
     email = console.nextLine();
+
     System.out.print("Senha: ");
     senha = console.nextLine();
+
     //senha = Usuario.encriptar (senha);
     //senha = senha.trim();
     //System.out.println("Senha = " + senha);
@@ -318,13 +343,13 @@ public class ControleDeRepublicas
     System.out.print("\nConfirma inclusão? ");
     char confirma = console.nextLine().charAt(0);
 
-    if(confirma=='s' || confirma=='S')
+    if(confirma== 's' || confirma== 'S')
     {
       Usuario r = new Usuario(-1, nome, email, senha, owner);
       int cod = arqUsuarios.incluir(r);
-      System.out.println("Usuario incluído com código: "+cod);
+      System.out.println("Usuario incluído com código: " + cod);
     }// end if
-  }// end incluirRepublica( )
+  }// end incluirUsuario( )
 
   public static void alterarUsuario( ) throws Exception
   {
@@ -335,8 +360,8 @@ public class ControleDeRepublicas
 
     codigo = Integer.valueOf(console.nextLine());
 
-    if(codigo <=0)
-    return;
+    if(codigo <= 0)
+      return;
 
     Usuario r;
 
@@ -348,11 +373,14 @@ public class ControleDeRepublicas
 
       System.out.print("\nNovo nome: ");
       nome = console.nextLine();
+
       System.out.print("\nNovo email: ");
       email = console.nextLine();
+
       System.out.print("Nova senha: ");
       senha = console.nextLine();
-      senha = Usuario.encriptar (senha);
+
+      senha = Usuario.encriptar(senha);
 
       System.out.print("\nConfirma alteração? ");
       char confirma = console.nextLine().charAt(0);
@@ -362,15 +390,16 @@ public class ControleDeRepublicas
         r.nome = (nome.length()>0?nome:r.nome);
         r.email = (email.length() >0? email:r.email);
         r.senha = (senha.length( ) > 0? senha: r.senha);
+
         if(arqUsuarios.alterar(r))
-        System.out.println("Usuario alterado.");
+          System.out.println("Usuario alterado.");
         else
-        System.out.println("Usuario não pode ser alterado.");
+          System.out.println("Usuario não pode ser alterado.");
       }// end if
     }
     else
-    System.out.println("Usuario não encontrado");
-  }// end alterarRepublica( )
+     System.out.println("Usuario não encontrado");
+  }// end alterarUsuario( )
 
   public static void excluirUsuario( ) throws Exception
   {
@@ -380,8 +409,8 @@ public class ControleDeRepublicas
     System.out.print("Código: ");
     codigo = Integer.valueOf(console.nextLine());
 
-    if(codigo <=0)
-    return;
+    if(codigo <= 0)
+      return;
 
     Usuario r;
     if((r = (Usuario)arqUsuarios.buscarCodigo(codigo))!=null)
@@ -392,15 +421,15 @@ public class ControleDeRepublicas
 
       if(confirma=='s' || confirma=='S')
       {
-        if( arqUsuarios.excluir(codigo) )
+        if(arqUsuarios.excluir(codigo))
         {
           System.out.println("Usuario excluído.");
-        }
-      }
+        }// end if
+      }// end if
     }
     else
-    System.out.println("Usuario não encontrado");
-  }// end excluiRepublica( )
+      System.out.println("Usuario não encontrado");
+  }// end excluirUsuario( )
 
   public static void buscarUsuarioCodigo( ) throws Exception
   {
@@ -410,15 +439,16 @@ public class ControleDeRepublicas
     System.out.print("Código: ");
     codigo = Integer.valueOf(console.nextLine());
 
-    if(codigo <=0)
-    return;
+    if(codigo <= 0)
+      return;
 
     Usuario r;
+
     if((r = (Usuario)arqUsuarios.buscarCodigo(codigo))!=null)
-    System.out.println(r);
+      System.out.println(r);
     else
-    System.out.println("Usuario não encontrado");
-  }// end buscarRepublicaCodigo( )
+      System.out.println("Usuario não encontrado");
+  }// end buscarUsuarioCodigo( )
 
   public static void buscarUsuarioNome( ) throws Exception
   {
@@ -430,20 +460,21 @@ public class ControleDeRepublicas
     nome = console.nextLine();
 
     if(nome == "")
-    return;
+      return;
 
     Usuario r;
+
     if((r = (Usuario)arqUsuarios.buscarString(nome))!=null)
-    System.out.println(r);
+      System.out.println(r);
     else
-    System.out.println("Usuario não encontrado");
-  }// end buscarRepublicaNome( )
+      System.out.println("Usuario não encontrado");
+  }// end buscarUsuarioNome( )
 
   public static void reorganizarUsuario( ) throws Exception
   {
     arqUsuarios.reorganizar();
     System.out.println("\nArquivo de Usuario reorganizado");
-  }// end reorganizar( )
+  }// end reorganizarUsuario( )
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -457,19 +488,23 @@ public class ControleDeRepublicas
     {
       System.out.println((Tarefas)Tarefas[i]);
     }// end for
-  }// end listarRepublica( )
+  }// end listarTarefas( )
 
   public static void incluirTarefa( ) throws Exception
   {
     String nomeTarefa, descricao, responsavel, tempoLimite, realizado;
 
     System.out.println("\nINCLUSÃO");
+
     System.out.print("Nome da Tarefa: ");
     nomeTarefa = console.nextLine();
+
     System.out.print("Descricao: ");
     descricao = console.nextLine();
+
     System.out.print("Responsavel: ");
     responsavel = console.nextLine();
+
     System.out.println("Tempo Limite : ");
     tempoLimite = console.nextLine();
 
@@ -480,9 +515,9 @@ public class ControleDeRepublicas
     {
       Tarefas r = new Tarefas(-1, nomeTarefa, descricao, responsavel, tempoLimite, "false");
       int cod = arqTarefas.incluir(r);
-      System.out.println("Tarefa incluído com código: "+cod);
+      System.out.println("Tarefa incluído com código: " + cod);
     }// end if
-  }// end incluirRepublica( )
+  }// end incluirTarefa( )
 
   public static void alterarTarefa( ) throws Exception
   {
@@ -493,8 +528,8 @@ public class ControleDeRepublicas
 
     codigo = Integer.valueOf(console.nextLine());
 
-    if(codigo <=0)
-    return;
+    if(codigo <= 0)
+      return;
 
     Tarefas r;
 
@@ -505,12 +540,16 @@ public class ControleDeRepublicas
       String nomeTarefa, descricao, responsavel, tempoLimite, realizado;
 
       System.out.println("\nINCLUSÃO");
+
       System.out.print("Novo Nome da Tarefa: ");
       nomeTarefa = console.nextLine();
+
       System.out.print("Novo Descricao: ");
       descricao = console.nextLine();
+
       System.out.print("Novo Responsavel: ");
       responsavel = console.nextLine();
+
       System.out.println("Novo Tempo Limite : ");
       tempoLimite = console.nextLine();
 
@@ -519,19 +558,20 @@ public class ControleDeRepublicas
 
       if(confirma=='s' || confirma=='S')
       {
-        r.nomeTarefa = (nomeTarefa.length()>0?nomeTarefa:r.nomeTarefa);
-        r.descricao = (descricao.length() >0? descricao:r.descricao);
+        r.nomeTarefa  = (nomeTarefa.length()>0? nomeTarefa: r.nomeTarefa);
+        r.descricao   = (descricao.length() >0? descricao: r.descricao);
         r.responsavel = (responsavel.length( ) > 0? responsavel: r.responsavel);
         r.tempoLimite = (tempoLimite.length( ) > 0? tempoLimite: r.tempoLimite);
+
         if(arqTarefas.alterar(r))
-        System.out.println("Tarefa alterado.");
+          System.out.println("Tarefa alterado.");
         else
-        System.out.println("Tarefa não pode ser alterado.");
+          System.out.println("Tarefa não pode ser alterado.");
       }// end if
     }
     else
-    System.out.println("Tarefa não encontrado");
-  }// end alterarRepublica( )
+      System.out.println("Tarefa não encontrado");
+  }// end alterarTarefa( )
 
   public static void excluirTarefa( ) throws Exception
   {
@@ -541,8 +581,8 @@ public class ControleDeRepublicas
     System.out.print("Código: ");
     codigo = Integer.valueOf(console.nextLine());
 
-    if(codigo <=0)
-    return;
+    if(codigo <= 0)
+      return;
 
     Tarefas r;
     if((r = (Tarefas)arqTarefas.buscarCodigo(codigo))!=null)
@@ -556,12 +596,12 @@ public class ControleDeRepublicas
         if( arqTarefas.excluir(codigo) )
         {
           System.out.println("Tarefa excluído.");
-        }
-      }
+        }// end if
+      }// end if
     }
     else
-    System.out.println("Tarefa não encontrado");
-  }// end excluiRepublica( )
+      System.out.println("Tarefa não encontrado");
+  }// end excluirTarefa( )
 
   public static void buscarTarefaCodigo( ) throws Exception
   {
@@ -571,15 +611,16 @@ public class ControleDeRepublicas
     System.out.print("Código: ");
     codigo = Integer.valueOf(console.nextLine());
 
-    if(codigo <=0)
-    return;
+    if(codigo <= 0)
+      return;
 
     Tarefas r;
+
     if((r = (Tarefas)arqTarefas.buscarCodigo(codigo))!=null)
-    System.out.println(r);
+      System.out.println(r);
     else
-    System.out.println("Tarefas não encontrado");
-  }// end buscarRepublicaCodigo( )
+      System.out.println("Tarefas não encontrado");
+  }// end buscarTarefaCodigo( )
 
   public static void buscarTarefaDescricao( ) throws Exception
   {
@@ -591,20 +632,21 @@ public class ControleDeRepublicas
     descricao = console.nextLine();
 
     if(descricao == "")
-    return;
+      return;
 
     Tarefas r;
+
     if((r = (Tarefas)arqTarefas.buscarString(descricao))!=null)
-    System.out.println(r);
+      System.out.println(r);
     else
-    System.out.println("Tarefas não encontrado");
-  }// end buscarRepublicaNome( )
+      System.out.println("Tarefas não encontrado");
+  }// end buscarTarefaDescricao( )
 
   public static void reorganizarTarefas( ) throws Exception
   {
     arqTarefas.reorganizar();
     System.out.println("\nArquivo de Tarefas reorganizado");
-  }// end reorganizar( )
+  }// end reorganizarTarefas( )
 
   public static void reorganizar() throws Exception
   {
@@ -614,103 +656,119 @@ public class ControleDeRepublicas
     reorganizarTarefas();
     reorganizarGastos();
     System.out.println("Reorganizacao completa.");
-  }
+  }// end reorganizar( )
 
-  public static void listarUsuariosRepublica() throws Exception {
-
+  public static void listarUsuariosRepublica() throws Exception
+  {
     System.out.println("\nLISTA DE USUARIOS POR REPUBLICA");
 
     int codigo;
     System.out.print("Código da republica: ");
     codigo = Integer.valueOf(console.nextLine());
-    if(codigo <=0)
+
+    if(codigo <= 0)
     return;
 
     int[] lista = idxUsuarioRepublica.lista(codigo);
     Usuario obj;
-    for(int i=0; i<lista.length; i++) {
-      if( (obj = (Usuario)arqUsuarios.buscarCodigo(lista[i]))!=null )
-      System.out.println(
-      "\nCodigo...........:" + obj.idUsuario           +
-      "\nNome............:" + obj.nome             +
-      "\nEmail...........:" + obj.email
-      );
+
+    for(int i = 0; i < lista.length; i++)
+    {
+      if((obj = (Usuario)arqUsuarios.buscarCodigo(lista[i])) != null)
+      {
+        System.out.println("\nCodigo...........:" + obj.idUsuario +
+                           "\nNome.............:" + obj.nome      +
+                           "\nEmail............:" + obj.email);
+      }
       else
-      System.out.println("Usuario não encontrado");
-    }
-  }
+      {
+        System.out.println("Usuario não encontrado");
+      }// end if
+    }// end if
+  }// end listarUsuariosRepublica( )
 
-  public static void listarRepublicasUsuario() throws Exception {
-
+  public static void listarRepublicasUsuario() throws Exception
+  {
     System.out.println("\nLISTA DE REPUBLICAS POR USUARIO");
 
     int codigo;
+
     System.out.print("Código do usuario: ");
     codigo = Integer.valueOf(console.nextLine());
-    if(codigo <=0)
-    return;
+
+    if(codigo <= 0)
+      return;
 
     int[] lista = idxRepublicaUsuario.lista(codigo);
     Republica obj;
-    for(int i=0; i<lista.length; i++) {
-      if( (obj = (Republica)arqRepublica.buscarCodigo(lista[i]))!=null )
-      System.out.println(
-      "\nCodigo...........:" + obj.codigo           +
-      "\nNome............:" + obj.nome             +
-      "\nProprietario.......:" + obj.nomeProprietario +
-      "\nEndereco...........:" + obj.endereco +
-      "\nPreco.......:" + obj.preco
-      );
+
+    for(int i = 0; i < lista.length; i++)
+    {
+      if((obj = (Republica)arqRepublica.buscarCodigo(lista[i])) != null)
+      {
+        System.out.println("\nCodigo...........:" + obj.codigo           +
+                           "\nNome.............:" + obj.nome             +
+                           "\nProprietario.....:" + obj.nomeProprietario +
+                           "\nEndereco.........:" + obj.endereco         +
+                           "\nPreco............:" + obj.preco);
+      }
       else
-      System.out.println("Republica não encontrada");
-    }
-  }
+      {
+        System.out.println("Republica não encontrada");
+      }// end if
+    }// end if
+  }// end listarRepublicasUsuario( )
 
-  public static void listarUsuariosTarefa() throws Exception {
-
+  public static void listarUsuariosTarefa() throws Exception
+  {
     System.out.println("\nLISTA DE USUARIOS POR TAREFA");
 
     int codigo;
     System.out.print("Código da tarefa: ");
     codigo = Integer.valueOf(console.nextLine());
-    if(codigo <=0)
-    return;
+
+    if(codigo <= 0)
+      return;
 
     int[] lista = idxUsuarioTarefas.lista(codigo);
     Usuario obj;
-    for(int i=0; i<lista.length; i++) {
-      if( (obj = (Usuario)arqUsuarios.buscarCodigo(lista[i]))!=null )
-      System.out.println(
-      "\nCodigo...........:" + obj.idUsuario           +
-      "\nNome............:" + obj.nome             +
-      "\nEmail...........:" + obj.email
-      );
+
+    for(int i = 0; i < lista.length; i++)
+    {
+      if((obj = (Usuario)arqUsuarios.buscarCodigo(lista[i])) != null)
+      {
+        System.out.println("\nCodigo...........:" + obj.idUsuario +
+                           "\nNome.............:" + obj.nome      +
+                           "\nEmail............:" + obj.email);
+      }
       else
-      System.out.println("Usuarios não encontrados");
-    }
-  }
+      {
+        System.out.println("Usuarios não encontrados");
+      }// end if
+    }// end if
+  }// end listarUsuariosTarefa( )
 
   // Metodos a fazer
-
   public static void listarTarefasUsuario()
   {
 
-  }
+  }// end listarTarefasUsuario( )
 
   public static void listarTarefasRepublica()
   {
 
-  }
+  }// end listarTarefasRepublica( )
 
   public static void reorganizarGastos() throws Exception
   {
 
-  }
+  }// end reorganizarGastos( )
 
   public static void listarGastosRepublica()
   {
 
-  }
+  }// end listarGastosRepublica( )
+
   // Povoar
   public static void povoar( ) throws Exception
   {

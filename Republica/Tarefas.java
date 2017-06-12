@@ -50,32 +50,31 @@ public class Tarefas implements Registro
       public String getDescricao( )
       {
             return descricao;
-      }
+      }// end getDescricao( )
 
       public String getResponsavel( )
       {
             return responsavel;
-      }
+      }// end getResponsavel( )
 
       public String getTempoLimite( ) // republica na qual o usuario pertence
       {
             return tempoLimite;
-      }
+      }// end getTempoLimite
 
       public String getRealizado( )
       {
             return realizado;
-      }
+      }// end getRealizado( )
 
       public String toString( )
       {
-            return 
-            "\nCodigo...........:" + idTarefa    +
-            "\nTarefa...........:" + nomeTarefa  +
-            "\nDescricao........:" + descricao   +
-            "\nResponsavel......:" + responsavel +
-            "\nTempo Limite.....:" + tempoLimite +
-            "\nRealizado........:" + realizado;
+            return "\nCodigo...........:" + idTarefa    +
+                   "\nTarefa...........:" + nomeTarefa  +
+                   "\nDescricao........:" + descricao   +
+                   "\nResponsavel......:" + responsavel +
+                   "\nTempo Limite.....:" + tempoLimite +
+                   "\nRealizado........:" + realizado;
       }// end toString( )
 
       public byte[] getByteArray( ) throws IOException

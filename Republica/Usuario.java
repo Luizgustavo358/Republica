@@ -15,19 +15,19 @@ public class Usuario implements Registro
    public Usuario(int c, String n, String em, String s, boolean ow)
    {
       idUsuario = c;
-      nome = n;
-      email = em;
-      this.senha = senha;
-      isOwner = ow;
+      nome      = n;
+      email     = em;
+      senha     = s;
+      isOwner   = ow;
    }// end construtor
 
    public Usuario( )
    {
       idUsuario = -1;
-      nome = "";
-      senha = "";
-      email = "";
-      isOwner = false;
+      nome      = "";
+      senha     = "";
+      email     = "";
+      isOwner   = false;
    }// end construtor
 
    public void setCodigo(int c)
@@ -45,84 +45,89 @@ public class Usuario implements Registro
       return nome;
    }// end getString( )
 
-   public String getEmail ( )
+   public String getEmail( )
    {
       return email;
-   }
+   }// end getEmail( )
 
-   public String getSenha ( )
+   public String getSenha( )
    {
       if (debug == true)
          return descriptografar (senha);
       else
          return "Acesso negado";
-   }
+   }// end getSenha( )
 
    public String toString( )
    {
-      return 
-         "\nCodigo.........:" + idUsuario +
-         "\nNome...........:" + nome      +
-         "\nEmail..........:" + email     +
-         "\nSenha..........:" + getSenha();
+      return "\nCodigo.........:" + idUsuario +
+             "\nNome...........:" + nome      +
+             "\nEmail..........:" + email     +
+             "\nSenha..........:" + getSenha();
    }// end toString( )
 
-   public static String encriptar (String texto)
+   public static String encriptar(String texto)
    {
       String encriptado;
       int pos = 0;
       int tamanhoTexto = texto.length();
       int tamanhoChave = chave.length();
       int linhas = (int)Math.ceil ((float)tamanhoTexto / (float)tamanhoChave);
-   
+
       char tabela[][] = new char[linhas][tamanhoChave]; // [linhas][colunas]
-   
-      for (int x = 0; x < tabela.length; x++)
+
+      for(int x = 0; x < tabela.length; x++)
       {
-         for (int y = 0; y < tabela[x].length && pos < tamanhoTexto; y++)
+         for(int y = 0; y < tabela[x].length && pos < tamanhoTexto; y++)
          {
             tabela[x][y] = (char) (( texto.charAt(pos) + chave.charAt(pos % tamanhoChave) ) ); // vai criptografar de acordo com o charset definido (UTF-8).
             pos++;
-         } // end for (y)
-      } // end for (x)
-      encriptado = TabTexto (tabela);
-      return encriptado;
-   } // end encriptar
+         }// end for
+      }// end for
 
-   protected String descriptografar (String senha)
+      encriptado = TabTexto (tabela);
+
+      return(encriptado);
+   }// end encriptar
+
+   protected String descriptografar(String senha)
    {
       String descriptografado = "";
-   
+
       int tamanhoChave = chave.length();
       int tamanhoTexto = senha.length();
       int linhas = (int)Math.ceil ((float)tamanhoTexto / (float)tamanhoChave);
       int pos = 0;
-   
-      char tabela[][] = new char[linhas][tamanhoChave]; // [linhas][colunas]
-   
-      for ( int x = 0; x < tabela.length; x++)
-      {
-         for (int y = 0; y < tabela[x].length; y++)
-         {
-            if (senha.charAt(pos) != '\u0000') // '\u0000' = null
-               tabela[x][y] = (char) (( senha.charAt(pos) - chave.charAt(pos % tamanhoChave) ) ); // vai descriptografar de acordo com o charset definido (UTF-8).
-            pos++;
-         } // end for (y)
-      } // end for (x)
-      descriptografado = TabTexto(tabela);
-      return descriptografado;
-   } // end descriptografar
 
-   public static String TabTexto (char tabela[][]) // metodo para transformar uma tabela em String
+      char tabela[][] = new char[linhas][tamanhoChave]; // [linhas][colunas]
+
+      for(int x = 0; x < tabela.length; x++)
+      {
+         for(int y = 0; y < tabela[x].length; y++)
+         {
+            if(senha.charAt(pos) != '\u0000') // '\u0000' = null
+               tabela[x][y] = (char) ((senha.charAt(pos) - chave.charAt(pos % tamanhoChave))); // vai descriptografar de acordo com o charset definido (UTF-8).
+            pos++;
+         }// end for
+      }// end for
+
+      descriptografado = TabTexto(tabela);
+
+      return descriptografado;
+   }// end descriptografar
+
+   public static String TabTexto(char tabela[][]) // metodo para transformar uma tabela em String
    {
       String texto = "";
-      for (int x = 0; x < tabela.length; x++)
+
+      for(int x = 0; x < tabela.length; x++)
       {
-         for (int y = 0; y < tabela[x].length; y++)
+         for(int y = 0; y < tabela[x].length; y++)
          {
             texto += Character.toString(tabela[x][y]);
-         } // end for y
-      }
+         }// end for
+      }// end for
+
       return texto;
    } // end TabTexto
 

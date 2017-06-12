@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class ArquivoIndexado<T extends Registro> 
+public class ArquivoIndexado<T extends Registro>
 {
     // definir dados
     RandomAccessFile arquivo;
@@ -9,21 +9,21 @@ public class ArquivoIndexado<T extends Registro>
     ArvoreB_Indireto indice2;
     String nomeArquivo;
     Class<T> classe;
-    
-    public ArquivoIndexado(Class<T> c, String n, String in1, String in2) throws Exception 
+
+    public ArquivoIndexado(Class<T> c, String n, String in1, String in2) throws Exception
     {
         nomeArquivo = n;
         classe = c;
         arquivo = new RandomAccessFile(nomeArquivo, "rw");
-        
+
         if(arquivo.length() < 4)
             arquivo.writeInt(0);
-        
+
         indice1 = new ArvoreB(10, in1);
         indice2 = new ArvoreB_Indireto(10, in2);
     }// end ArquivoIndexado
-    
-    public int incluir(T r) throws Exception 
+
+    public int incluir(T r) throws Exception
     {
         arquivo.seek(0);
         int cod = arquivo.readInt( );
@@ -40,11 +40,11 @@ public class ArquivoIndexado<T extends Registro>
         arquivo.write(b);
         indice1.inserir(cod, endereco);
         indice2.inserir(r.getString( ), r.getCodigo( )); // o índice é indireto
-        
+
         return cod;
     }// end incluir( )
-    
-    public Object[] listar( ) throws Exception 
+
+    public Object[] listar( ) throws Exception
     {
         ArrayList<T> lista = new ArrayList<>( );
         arquivo.seek(4);
@@ -52,7 +52,7 @@ public class ArquivoIndexado<T extends Registro>
         byte[] b;
         int s;
         T r;
-        while(arquivo.getFilePointer( ) < arquivo.length( )) 
+        while(arquivo.getFilePointer( ) < arquivo.length( ))
         {
             r = classe.newInstance( );
             lapide = arquivo.readByte( );
@@ -64,20 +64,20 @@ public class ArquivoIndexado<T extends Registro>
             if(lapide == ' ')
                 lista.add(r);
         }// end while
-        
+
         Object[] rs = lista.toArray( );
         return rs;
     }// end listar( )
-    
-    public Registro buscarCodigo(int c) throws Exception 
-    {        
+
+    public Registro buscarCodigo(int c) throws Exception
+    {
         T aux = classe.newInstance( );
         byte lapide;
         byte[] b;
         int s;
         long endereco;
-        
-        if((endereco = indice1.buscar(c)) >= 0 ) 
+
+        if((endereco = indice1.buscar(c)) >= 0 )
         {
             arquivo.seek(endereco);
             lapide = arquivo.readByte( );
@@ -88,20 +88,20 @@ public class ArquivoIndexado<T extends Registro>
             arquivo.seek(endereco);
             return aux;
         }
-        else 
+        else
             return null;
     }// end buscarCodigo( )
-    
-    public Registro buscarString(String n) throws Exception 
-    {        
+
+    public Registro buscarString(String n) throws Exception
+    {
         T aux = classe.newInstance( );
         byte lapide;
         byte[] b;
         int s;
         long endereco;
         int codigo;
-        
-        if((codigo = indice2.buscar(n)) >= 0 ) 
+
+        if((codigo = indice2.buscar(n)) >= 0 )
         {
             endereco = indice1.buscar(codigo);
             arquivo.seek(endereco);
@@ -112,12 +112,12 @@ public class ArquivoIndexado<T extends Registro>
             aux.setByteArray(b);
             return aux;
         }
-        else 
+        else
             return null;
     }// end buscarString( )
-    
-    public boolean excluir(int c) throws Exception 
-    {        
+
+    public boolean excluir(int c) throws Exception
+    {
         byte[] b;
         int s;
         T aux = classe.newInstance( );
@@ -130,11 +130,11 @@ public class ArquivoIndexado<T extends Registro>
         aux.setByteArray(b);
         indice1.excluir(c);
         indice2.excluir(aux.getString( ));
-        
+
         return true;
     }// end excluir( )
-    
-    public boolean alterar(T r) throws Exception 
+
+    public boolean alterar(T r) throws Exception
     {
         byte[] b;
         int s;
@@ -154,8 +154,8 @@ public class ArquivoIndexado<T extends Registro>
         arquivo.writeInt(b.length);
         arquivo.write(b);
         indice1.atualizar(r.getCodigo( ), endereco);
-        
-        if(r.getString( ).compareTo(aux.getString( )) != 0) 
+
+        if(r.getString( ).compareTo(aux.getString( )) != 0)
         {
             indice2.excluir(aux.getString( ));
             indice2.inserir(r.getString( ), r.getCodigo( ));
@@ -163,47 +163,47 @@ public class ArquivoIndexado<T extends Registro>
 
         return true;
     }// end alterar( )
-    
-    public void reorganizar( ) throws Exception 
-    {        
+
+    public void reorganizar( ) throws Exception
+    {
         int tamanhoBlocoMemoria = 3;
-        
+
         // armazena o cabeçalho
         arquivo.seek(0);
         int cabecalho = arquivo.readInt( );
-        
+
         // PRIMEIRA ETAPA - DISTRIBUIÇÃO
         List<T> registrosOrdenados = new ArrayList<>( );
-        
+
         int     contador = 0, seletor = 0;
         int     tamanho, codigo;
         boolean fimDeArquivo = false;
         byte    lapide;
         byte[]  dados;
-        T       r1 = classe.newInstance(), 
-                r2 = classe.newInstance(), 
+        T       r1 = classe.newInstance(),
+                r2 = classe.newInstance(),
                 r3 = classe.newInstance();
         T       rAnt1, rAnt2, rAnt3;
         int     s;
         byte[]  b;
-        
+
         DataOutputStream out1 = new DataOutputStream( new FileOutputStream("temp1.db"));
         DataOutputStream out2 = new DataOutputStream( new FileOutputStream("temp2.db"));
         DataOutputStream out3 = new DataOutputStream( new FileOutputStream("temp3.db"));
         DataOutputStream out = out1;
-        
-        try 
+
+        try
         {
             contador = 0;
             seletor = 0;
-            
-            while(!fimDeArquivo) 
-            {                
+
+            while(!fimDeArquivo)
+            {
                 if(arquivo.getFilePointer( ) == arquivo.length( ))
                     fimDeArquivo = true;
 
                 // le o registro no arquivo original
-                if(!fimDeArquivo) 
+                if(!fimDeArquivo)
                 {
                     lapide = arquivo.readByte( );
                     s = arquivo.readInt( );
@@ -211,25 +211,25 @@ public class ArquivoIndexado<T extends Registro>
                     arquivo.read(b);
                     r1.setByteArray(b);
 
-                    if(lapide == ' ') 
+                    if(lapide == ' ')
                     {
                         registrosOrdenados.add((T)r1.clone( ));
                         contador++;
                     }// end if
                 }// end if
-                
-                if((fimDeArquivo && contador > 0) || contador == tamanhoBlocoMemoria) 
+
+                if((fimDeArquivo && contador > 0) || contador == tamanhoBlocoMemoria)
                 {
                     Collections.sort(registrosOrdenados);
-                    
+
                     switch(seletor)
                     {
                         case 0: out = out1; break;
                         case 1: out = out2; break;
                         case 2: out = out3;
                     }// end switch
-                    
-                    for(T r:registrosOrdenados) 
+
+                    for(T r:registrosOrdenados)
                     {
                         b = r.getByteArray( );
                         out.writeInt(b.length);
@@ -238,8 +238,8 @@ public class ArquivoIndexado<T extends Registro>
 
                     registrosOrdenados.clear( );
                     seletor = (seletor+1)%3;
-                    contador = 0;                    
-                }// end if                
+                    contador = 0;
+                }// end if
             }// end while
         } catch(Exception e) {
             e.printStackTrace( );
@@ -249,30 +249,30 @@ public class ArquivoIndexado<T extends Registro>
         out1.close( );
         out2.close( );
         out3.close( );
-        
+
         // SEGUNDA ETAPA - INTERCALAÇÃO
         boolean sentido = true; // true: 1,2,3 -> 4,5,6  e false: 4,5,6 -> 1,2,3
         DataInputStream in1, in2, in3;
         boolean maisIntercalacoes = true; // há registros em mais de um arquivo temporário
         boolean compara1, compara2, compara3; // indica que há mais registros no bloco do arquivo temporário correspondente
         boolean terminou1, terminou2, terminou3; // indica que a fonte esgotou (fim do arquivo)
-        boolean mudou1, mudou2, mudou3; // indica a fonte do último registro copiado para o destino 
-        
-        while(maisIntercalacoes) 
-        {            
+        boolean mudou1, mudou2, mudou3; // indica a fonte do último registro copiado para o destino
+
+        while(maisIntercalacoes)
+        {
             maisIntercalacoes = false;
-            mudou1 = true; 
-            mudou2 = true; 
+            mudou1 = true;
+            mudou2 = true;
             mudou3 = true;
-            compara1 = false; 
-            compara2 = false; 
+            compara1 = false;
+            compara2 = false;
             compara3 = false;
-            terminou1 = false; 
-            terminou2 = false; 
+            terminou1 = false;
+            terminou2 = false;
             terminou3 = false;
-            
+
             // Seleciona fontes e destinos
-            if(sentido) 
+            if(sentido)
             {
                 in1 = new DataInputStream( new FileInputStream("temp1.db"));
                 in2 = new DataInputStream( new FileInputStream("temp2.db"));
@@ -280,8 +280,8 @@ public class ArquivoIndexado<T extends Registro>
                 out1 = new DataOutputStream( new FileOutputStream("temp4.db"));
                 out2 = new DataOutputStream( new FileOutputStream("temp5.db"));
                 out3 = new DataOutputStream( new FileOutputStream("temp6.db"));
-            } 
-            else 
+            }
+            else
             {
                 in1 = new DataInputStream( new FileInputStream("temp4.db"));
                 in2 = new DataInputStream( new FileInputStream("temp5.db"));
@@ -293,18 +293,18 @@ public class ArquivoIndexado<T extends Registro>
 
             sentido = !sentido;
             seletor = 0;
-            
+
             // registros para leitura e comparações
             // liberar registros da intercalação anterior
             r1 = classe.newInstance( );
             r2 = classe.newInstance( );
             r3 = classe.newInstance( );
-   
-            while(!terminou1 || !terminou2 || !terminou3) 
-            {                
-                if(!compara1 && !compara2 && !compara3) 
+
+            while(!terminou1 || !terminou2 || !terminou3)
+            {
+                if(!compara1 && !compara2 && !compara3)
                 {
-                    switch(seletor) 
+                    switch(seletor)
                     {
                         case 0: out = out1; break;
                         case 1: out = out2; break;
@@ -315,22 +315,22 @@ public class ArquivoIndexado<T extends Registro>
                         maisIntercalacoes = true;
 
                     seletor = (seletor+1)%3;
-                    
-                    if(!terminou1) 
+
+                    if(!terminou1)
                         compara1 = true;
 
-                    if(!terminou2) 
+                    if(!terminou2)
                         compara2 = true;
 
-                    if(!terminou3) 
+                    if(!terminou3)
                         compara3 = true;
                 }// end if
-                
+
                 // lê o próximo registro da última fonte usada (de onde o registro anterior saiu)
-                if(mudou1) 
+                if(mudou1)
                 {
                     rAnt1 = (T)r1.clone( );
-                    
+
                     try
                     {
                         s = in1.readInt( );
@@ -349,7 +349,7 @@ public class ArquivoIndexado<T extends Registro>
                     mudou1 = false;
                 }// end if
 
-                if(mudou2) 
+                if(mudou2)
                 {
                     rAnt2 = (T)r2.clone( );
 
@@ -371,7 +371,7 @@ public class ArquivoIndexado<T extends Registro>
                     mudou2 = false;
                 }// end if
 
-                if(mudou3) 
+                if(mudou3)
                 {
                     rAnt3 = (T)r3.clone( );
 
@@ -392,7 +392,7 @@ public class ArquivoIndexado<T extends Registro>
 
                     mudou3 = false;
                 }// end if
-                
+
                 // Escreve o menor registro
                 // Testa se é o r1
                 if(compara1 && (!compara2 || r1.compareTo(r2) <= 0) && (!compara3 || r1.compareTo(r3) <= 0)){
@@ -420,23 +420,23 @@ public class ArquivoIndexado<T extends Registro>
                 }// end if
             }// end while
 
-            in1.close( ); 
-            in2.close( ); 
+            in1.close( );
+            in2.close( );
             in3.close( );
-            out1.close( ); 
-            out2.close( ); 
-            out3.close( );            
+            out1.close( );
+            out2.close( );
+            out3.close( );
         }// end while
-        
+
         arquivo.close( );
 
         if(sentido)
             in1 = new DataInputStream( new FileInputStream("temp1.db"));
         else
             in1 = new DataInputStream( new FileInputStream("temp4.db"));
-        
+
         DataOutputStream ordenado = new DataOutputStream(new FileOutputStream(nomeArquivo));
-        
+
         // reconstrói o arquivo original, ordenado
         indice1.apagar( );
         indice2.apagar( );
@@ -445,13 +445,13 @@ public class ArquivoIndexado<T extends Registro>
 
         try
         {
-            while(true) 
+            while(true)
             {
                 s = in1.readInt( );
                 b = new byte[s];
                 in1.read(b);
                 r1.setByteArray(b);
-            
+
                 endereco = ordenado.size( );
                 ordenado.writeByte(' ');
                 b = r1.getByteArray( );
@@ -466,13 +466,13 @@ public class ArquivoIndexado<T extends Registro>
 
         in1.close( );
         ordenado.close( );
-        
+
         (new File("temp1.db")).delete( );
         (new File("temp2.db")).delete( );
         (new File("temp3.db")).delete( );
         (new File("temp4.db")).delete( );
         (new File("temp5.db")).delete( );
         (new File("temp6.db")).delete( );
-        arquivo = new RandomAccessFile(nomeArquivo, "rw");       
+        arquivo = new RandomAccessFile(nomeArquivo, "rw");
     }// end reorganizar( )
 }// end class ArquivoIndexado
