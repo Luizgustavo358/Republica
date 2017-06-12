@@ -20,3 +20,9 @@ Trabalho de cadastramento de Repúblicas e divisão de tarefas entre os usuário
 - Árvore B+
 - Criptografia
 - Arquivos Indexados
+
+### Como Executar no Terminal
+```sh
+$ javac ControleDeRepublicas.java
+$ java ControleDeRepublicas
+```
