@@ -26,3 +26,6 @@ Trabalho de cadastramento de Repúblicas e divisão de tarefas entre os usuário
 $ javac ControleDeRepublicas.java
 $ java ControleDeRepublicas
 ```
+
+### Programa Rodando
+![alt text](https://github.com/Luizgustavo358/Republica/tree/master/imagem)
