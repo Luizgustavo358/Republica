@@ -28,4 +28,4 @@ $ java ControleDeRepublicas
 ```
 
 ### Programa Rodando
-![alt text](https://github.com/Luizgustavo358/Republica/raw/master/path/to/imagem/terminal.png)
+![alt text](imagem/terminal.png "Programa rodando no terminal do Linux")
