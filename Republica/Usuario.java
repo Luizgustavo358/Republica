@@ -72,7 +72,7 @@ public class Usuario implements Registro
              "\nNome...........:" + nome      +
              "\nEmail..........:" + email     +
              "\nSenha..........:" + getSenha() +
-             "\nRepublica.....:" + idRepublica;
+             "\nRepublica......:" + idRepublica;
    }// end toString( )
 
    public static String encriptar(String texto)

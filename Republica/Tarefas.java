@@ -70,16 +70,16 @@ public class Tarefas implements Registro
 
       public String toString( )
       {
-            String resp =
-            "\nCodigo...........:" + idTarefa    +
-                   "\nTarefa...........:" + nomeTarefa  +
-                   "\nDescricao........:" + descricao   +
-                   "\nTempo Limite.....:" + tempoLimite +
-                   "\nRealizado........:" + realizado +
-                   "\nCodigo Republica: "+ idRepublica;
-                   for (int x = 0; x < idUsuario.length; x++)
-                   {
-                        resp += "\nCodigo Usuarios: " +idUsuario[x];
+            String resp = "\nCodigo...........:" + idTarefa    +
+                          "\nTarefa...........:" + nomeTarefa  +
+                          "\nDescricao........:" + descricao   +
+                          "\nTempo Limite.....:" + tempoLimite +
+                          "\nRealizado........:" + realizado   +
+                          "\nCodigo Republica.:" + idRepublica;
+
+                  for (int x = 0; x < idUsuario.length; x++)
+                  {
+                        resp += "\nCodigo Usuarios: " + idUsuario[x];
                   }
             return resp;
       }// end toString( )

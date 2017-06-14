@@ -570,11 +570,11 @@ public class ControleDeRepublicas
             return;
          } // end else
       } // end while
-      System.out.print("Nome.....: ");
+      System.out.print("Nome..........: ");
       nomeTarefa = console.nextLine();
       System.out.print("Descrição.....: ");
       descricao = console.nextLine();
-      System.out.print("Data.....: ");
+      System.out.print("Data..........: ");
       tempoLimite = console.nextLine();
 
 
