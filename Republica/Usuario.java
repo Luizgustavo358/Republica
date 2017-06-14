@@ -8,17 +8,19 @@ public class Usuario implements Registro
    protected String email; // Tambem e o login.
    protected String senha; // guardada ja encriptada.
    protected boolean isOwner; // False = Nao e proprietario.
+   protected int idRepublica;
 
    protected static String chave = "abacate";
-   protected boolean debug = true;
+   protected boolean debug = false;
 
-   public Usuario(int c, String n, String em, String s, boolean ow)
+   public Usuario(int c, String n, String em, String s, boolean ow, int idRep)
    {
       idUsuario = c;
       nome      = n;
       email     = em;
       senha     = s;
       isOwner   = ow;
+      idRepublica = idRep;
    }// end construtor
 
    public Usuario( )
@@ -28,6 +30,7 @@ public class Usuario implements Registro
       senha     = "";
       email     = "";
       isOwner   = false;
+      idRepublica = -1;
    }// end construtor
 
    public void setCodigo(int c)
@@ -38,6 +41,11 @@ public class Usuario implements Registro
    public int getCodigo( )
    {
       return idUsuario;
+   }// end getCodigo( )
+
+   public int getRepublica( )
+   {
+      return idRepublica;
    }// end getCodigo( )
 
    public String getString( )
@@ -63,7 +71,8 @@ public class Usuario implements Registro
       return "\nCodigo.........:" + idUsuario +
              "\nNome...........:" + nome      +
              "\nEmail..........:" + email     +
-             "\nSenha..........:" + getSenha();
+             "\nSenha..........:" + getSenha() +
+             "\nRepublica.....:" + idRepublica;
    }// end toString( )
 
    public static String encriptar(String texto)
@@ -140,6 +149,7 @@ public class Usuario implements Registro
       saida.writeUTF(email);
       saida.writeUTF(senha);
       saida.writeBoolean(isOwner);
+      saida.writeInt(idRepublica);
       return registro.toByteArray();
    }// end getByteArray( )
 
@@ -152,6 +162,7 @@ public class Usuario implements Registro
       email = entrada.readUTF();
       senha = entrada.readUTF();
       isOwner = entrada.readBoolean();
+      this.idRepublica = entrada.readInt();
    }// end setByteArray( )
 
    public Object clone( ) throws CloneNotSupportedException
