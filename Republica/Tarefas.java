@@ -76,7 +76,7 @@ public class Tarefas implements Registro
                  "\nTempo Limite.....:" + tempoLimite +
                  "\nRealizado........:" + realizado   +
                  "\nCodigo Republica.:" + idRepublica;
-   
+
       for (int x = 0; x < idUsuario.length; x++)
       {
          resp += "\nCodigo Usuarios: " + idUsuario[x];

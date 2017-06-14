@@ -82,9 +82,9 @@ public class Usuario implements Registro
       int tamanhoTexto = texto.length();
       int tamanhoChave = chave.length();
       int linhas = (int)Math.ceil ((float)tamanhoTexto / (float)tamanhoChave);
-   
+
       char tabela[][] = new char[linhas][tamanhoChave]; // [linhas][colunas]
-   
+
       for(int x = 0; x < tabela.length; x++)
       {
          for(int y = 0; y < tabela[x].length && pos < tamanhoTexto; y++)
@@ -93,23 +93,23 @@ public class Usuario implements Registro
             pos++;
          }// end for
       }// end for
-   
+
       encriptado = TabTexto (tabela);
-   
+
       return(encriptado);
    }// end encriptar
 
    protected String descriptografar(String senha)
    {
       String descriptografado = "";
-   
+
       int tamanhoChave = chave.length();
       int tamanhoTexto = senha.length();
       int linhas = (int)Math.ceil ((float)tamanhoTexto / (float)tamanhoChave);
       int pos = 0;
-   
+
       char tabela[][] = new char[linhas][tamanhoChave]; // [linhas][colunas]
-   
+
       for(int x = 0; x < tabela.length; x++)
       {
          for(int y = 0; y < tabela[x].length; y++)
@@ -119,16 +119,16 @@ public class Usuario implements Registro
             pos++;
          }// end for
       }// end for
-   
+
       descriptografado = TabTexto(tabela);
-   
+
       return descriptografado;
    }// end descriptografar
 
    public static String TabTexto(char tabela[][]) // metodo para transformar uma tabela em String
    {
       String texto = "";
-   
+
       for(int x = 0; x < tabela.length; x++)
       {
          for(int y = 0; y < tabela[x].length; y++)
@@ -136,7 +136,7 @@ public class Usuario implements Registro
             texto += Character.toString(tabela[x][y]);
          }// end for
       }// end for
-   
+
       return texto;
    } // end TabTexto
 
