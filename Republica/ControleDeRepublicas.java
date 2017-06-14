@@ -43,19 +43,19 @@ public class ControleDeRepublicas
          arqUsuarios  = new ArquivoIndexado<>(Usuario.class  , "Usuarios.db"  , "Usuarios1.idx"  , "Usuarios2.idx"  );
          arqTarefas   = new ArquivoIndexado<>(Tarefas.class  , "Tarefas.db"   , "Tarefas1.idx"   , "Tarefas2.idx"   );
          arqGastos    = new ArquivoIndexado<>(Gastos.class   , "Gastos.db"    , "Gastos1.idx"    , "Gastos2.idx"    );
-
+      
          idxRepublicaUsuario = new ArvoreBMais (10, "republica_usuario.idx"); // LISTA DE USUARIOS POR REPUBLICA
-
+      
          idxRepublicaGastos = new ArvoreBMais (10, "republica_gastos.idx");
-
+      
          idxRepublicaTarefas = new ArvoreBMais (10, "republica_tarefas.idx");
-
+      
          idxUsuarioTarefas = new ArvoreBMais (10, "usuario_tarefas.idx"); // LISTA DE USUARIOS POR TAREFA
          idxTarefasUsuario = new ArvoreBMais (10, "tarefas_usuario.idx"); // LISTA DE TAREFAS POR USUARIO
-
+      
       // menu
          int opcao;
-
+      
          do
          {
             System.out.println("\n-------------------------------------------------------------------");
@@ -70,24 +70,24 @@ public class ControleDeRepublicas
             System.out.println("13 - Excluir            23 - Excluir           33 - Excluir");
             System.out.println("14 - Buscar por código  24 - Buscar por código 34 - Buscar por código");
             System.out.println("15 - Buscar por nome    25 - Buscar por nome   35 - Buscar por nome");
-
+         
             System.out.println("\n41 - Lista de usuarios de uma republica*"); //  metodo funciona mas falta relacionar os 2 na arvoreB+.
-
+         
             System.out.println("42 - Lista de usuarios de uma tarefa*");
             System.out.println("43 - Lista de tarefas de um usuário*");
-
+         
          //        System.out.println("44 - Lista de gastos de uma republica"); // Gastos não implementado
-
+         
             System.out.println("45 - Lista de tarefas de uma republica"); // Metodo não implementado. (relação ja implementada)
             System.out.println("46 - Comprimir dados");
-
+         
             System.out.println("\n98 - Povoar DB (republica)");
             System.out.println("\n99 - Reorganizar arquivos");
             System.out.println("0 - Sair");
-
+         
             System.out.print("\nOpcao: ");
             opcao = Integer.valueOf(console.nextLine());
-
+         
             switch(opcao)
             {
             // Republica
@@ -103,7 +103,7 @@ public class ControleDeRepublicas
                   break;
                case 15: buscarRepublicaNome( );
                   break;
-
+            
             // Usuario
                case 20: listarUsuarios( );
                   break;
@@ -117,7 +117,7 @@ public class ControleDeRepublicas
                   break;
                case 25: buscarUsuarioNome( );
                   break;
-
+            
             // Tarefas
                case 30: listarTarefas( );
                   break;
@@ -131,7 +131,7 @@ public class ControleDeRepublicas
                   break;
                case 35: buscarTarefaDescricao( );
                   break;
-
+            
             // Listar
                case 41: listarUsuariosRepublica();
                   break;
@@ -143,10 +143,10 @@ public class ControleDeRepublicas
                   break;
                case 45: listarTarefasRepublica();
                   break;
-
+            
                case 46: compressaoDeDados();
                   break;
-
+            
                case 98: povoar( );
                   break;
                case 99: reorganizar( );
@@ -165,7 +165,7 @@ public class ControleDeRepublicas
    public static void listarRepublica( ) throws Exception
    {
       Object[] Republicas = arqRepublica.listar( );
-
+   
       for(int i = 0; i < Republicas.length; i++)
       {
          System.out.println((Republica)Republicas[i]);
@@ -176,24 +176,24 @@ public class ControleDeRepublicas
    {
       String nome, nomeProprietario, endereco;
       float preco;
-
+   
       System.out.println("\nINCLUSÃO");
-
+   
       System.out.print("Nome: ");
       nome = console.nextLine();
-
+   
       System.out.print("Nome Proprietário: ");
       nomeProprietario = console.nextLine();
-
+   
       System.out.print("Endereço: ");
       endereco = console.nextLine();
-
+   
       System.out.print("Preço (mensal): ");
       preco = Float.valueOf(console.nextLine());
-
+   
       System.out.print("\nConfirma inclusão? ");
       char confirma = console.nextLine().charAt(0);
-
+   
       if(confirma == 's' || confirma == 'S')
       {
          Republica r = new Republica(-1, nome, nomeProprietario, endereco, preco);
@@ -205,45 +205,45 @@ public class ControleDeRepublicas
    public static void alterarRepublica( ) throws Exception
    {
       System.out.println("\nALTERAÇÃO");
-
+   
       int codigo;
       System.out.print("Código: ");
-
+   
       codigo = Integer.valueOf(console.nextLine());
-
+   
       if(codigo <= 0)
          return;
-
+   
       Republica r;
-
+   
       if((r = (Republica)arqRepublica.buscarCodigo(codigo)) != null)
       {
          System.out.println(r);
-
+      
          String nome, nomeProprietario, endereco, preco;
-
+      
          System.out.print("\nNovo nome: ");
          nome = console.nextLine();
-
+      
          System.out.print("\nNovo Proprietário: ");
          nomeProprietario = console.nextLine();
-
+      
          System.out.print("Novo endereco: ");
          endereco = console.nextLine();
-
+      
          System.out.print("Novo preço (mensal): ");
          preco = console.nextLine();
-
+      
          System.out.print("\nConfirma alteração? ");
          char confirma = console.nextLine().charAt(0);
-
+      
          if(confirma == 's' || confirma == 'S')
          {
             r.nome = (nome.length() > 0 ? nome: r.nome);
             r.nomeProprietario = (nomeProprietario.length() > 0 ? nomeProprietario: r.nomeProprietario);
             r.endereco = (endereco.length( ) > 0 ? endereco: r.endereco);
             r.preco = (preco.length() > 0 ? Float.valueOf(preco): r.preco);
-
+         
             if(arqRepublica.alterar(r))
                System.out.println("Republica alterado.");
             else
@@ -259,21 +259,21 @@ public class ControleDeRepublicas
    public static void excluirRepublica( ) throws Exception
    {
       System.out.println("\nEXCLUSÃO");
-
+   
       int codigo;
       System.out.print("Código: ");
       codigo = Integer.valueOf(console.nextLine());
-
+   
       if(codigo <= 0)
          return;
-
+   
       Republica r;
       if((r = (Republica)arqRepublica.buscarCodigo(codigo)) != null)
       {
          System.out.println(r);
          System.out.print("\nConfirma exclusão? ");
          char confirma = console.nextLine().charAt(0);
-
+      
          if(confirma == 's' || confirma == 'S')
          {
             if(arqRepublica.excluir(codigo))
@@ -291,16 +291,16 @@ public class ControleDeRepublicas
    public static void buscarRepublicaCodigo( ) throws Exception
    {
       System.out.println("\nBUSCA POR CÓDIGO");
-
+   
       int codigo;
       System.out.print("Código: ");
       codigo = Integer.valueOf(console.nextLine());
-
+   
       if(codigo <= 0)
          return;
-
+   
       Republica r;
-
+   
       if((r = (Republica)arqRepublica.buscarCodigo(codigo))!=null)
          System.out.println(r);
       else
@@ -310,17 +310,17 @@ public class ControleDeRepublicas
    public static void buscarRepublicaNome( ) throws Exception
    {
       System.out.println("\nBUSCA POR NOME");
-
+   
       String nome;
       System.out.print("Nome: ");
-
+   
       nome = console.nextLine();
-
+   
       if(nome == "")
          return;
-
+   
       Republica r;
-
+   
       if((r = (Republica)arqRepublica.buscarString(nome))!=null)
          System.out.println(r);
       else
@@ -339,7 +339,7 @@ public class ControleDeRepublicas
    public static void listarUsuarios( ) throws Exception
    {
       Object[] Usuario = arqUsuarios.listar( );
-
+   
       for(int i = 0; i < Usuario.length; i++)
       {
          System.out.println((Usuario)Usuario[i]);
@@ -352,23 +352,23 @@ public class ControleDeRepublicas
       boolean owner = false;
       int codRep;
       Republica objRepublica;
-
+   
       System.out.println("\nINCLUSÃO");
-
+   
       System.out.print("Nome: ");
       nome = console.nextLine();
-
+   
       System.out.print("Email: ");
       email = console.nextLine();
-
+   
       System.out.print("Senha: ");
       senha = console.nextLine();
       senha = Usuario.encriptar (senha);
       senha = senha.trim();
-
+   
       System.out.print("Codigo republica: ");
       codRep = console.nextInt();
-
+   
       if ( (objRepublica = (Republica)arqRepublica.buscarCodigo(codRep))!=null )
          System.out.println("- "+objRepublica.nome);
       else
@@ -379,12 +379,12 @@ public class ControleDeRepublicas
       console.nextLine();
       System.out.print("\nConfirma inclusão? ");
       char confirma = console.nextLine().charAt(0);
-
+   
       if(confirma== 's' || confirma== 'S')
       {
          Usuario r = new Usuario(-1, nome, email, senha, owner, codRep);
          int cod = arqUsuarios.incluir(r);
-
+      
          idxRepublicaUsuario.inserir (codRep, cod);
          System.out.println("Usuario incluído com código: " + cod);
       }// end if
@@ -393,43 +393,43 @@ public class ControleDeRepublicas
    public static void alterarUsuario( ) throws Exception
    {
       System.out.println("\nALTERAÇÃO");
-
+   
       int codigo;
       System.out.print("Código: ");
-
+   
       codigo = Integer.valueOf(console.nextLine());
-
+   
       if(codigo <= 0)
          return;
-
+   
       Usuario r;
-
+   
       if((r = (Usuario)arqUsuarios.buscarCodigo(codigo))!=null)
       {
          System.out.println(r);
-
+      
          String nome, email, senha;
-
+      
          System.out.print("\nNovo nome: ");
          nome = console.nextLine();
-
+      
          System.out.print("\nNovo email: ");
          email = console.nextLine();
-
+      
          System.out.print("Nova senha: ");
          senha = console.nextLine();
-
+      
          senha = Usuario.encriptar(senha);
-
+      
          System.out.print("\nConfirma alteração? ");
          char confirma = console.nextLine().charAt(0);
-
+      
          if(confirma=='s' || confirma=='S')
          {
             r.nome = (nome.length()>0?nome:r.nome);
             r.email = (email.length() >0? email:r.email);
             r.senha = (senha.length( ) > 0? senha: r.senha);
-
+         
             if(arqUsuarios.alterar(r))
                System.out.println("Usuario alterado.");
             else
@@ -443,21 +443,21 @@ public class ControleDeRepublicas
    public static void excluirUsuario( ) throws Exception
    {
       System.out.println("\nEXCLUSÃO");
-
+   
       int codigo;
       System.out.print("Código: ");
       codigo = Integer.valueOf(console.nextLine());
-
+   
       if(codigo <= 0)
          return;
-
+   
       Usuario r;
       if((r = (Usuario)arqUsuarios.buscarCodigo(codigo))!=null)
       {
          System.out.println(r);
          System.out.print("\nConfirma exclusão? ");
          char confirma = console.nextLine().charAt(0);
-
+      
          if(confirma=='s' || confirma=='S')
          {
             if(arqUsuarios.excluir(codigo))
@@ -473,16 +473,16 @@ public class ControleDeRepublicas
    public static void buscarUsuarioCodigo( ) throws Exception
    {
       System.out.println("\nBUSCA POR CÓDIGO");
-
+   
       int codigo;
       System.out.print("Código: ");
       codigo = Integer.valueOf(console.nextLine());
-
+   
       if(codigo <= 0)
          return;
-
+   
       Usuario r;
-
+   
       if((r = (Usuario)arqUsuarios.buscarCodigo(codigo))!=null)
          System.out.println(r);
       else
@@ -492,17 +492,17 @@ public class ControleDeRepublicas
    public static void buscarUsuarioNome( ) throws Exception
    {
       System.out.println("\nBUSCA POR NOME");
-
+   
       String nome;
       System.out.print("Nome: ");
-
+   
       nome = console.nextLine();
-
+   
       if(nome == "")
          return;
-
+   
       Usuario r;
-
+   
       if((r = (Usuario)arqUsuarios.buscarString(nome))!=null)
          System.out.println(r);
       else
@@ -522,7 +522,7 @@ public class ControleDeRepublicas
    public static void listarTarefas( ) throws Exception
    {
       Object[] Tarefas = arqTarefas.listar( );
-
+   
       for(int i = 0; i < Tarefas.length; i++)
       {
          System.out.println((Tarefas)Tarefas[i]);
@@ -530,16 +530,16 @@ public class ControleDeRepublicas
    }// end listarTarefas( )
 
    public static void incluirTarefa() throws Exception {
-
+   
       int codigoRepublica, numUsuario, codU;
       int[] codigoUsuario;
       String descricao;
       String tempoLimite;
       String nomeTarefa;
-
+   
       Usuario objUsuario;
       Republica objRepublica;
-
+   
       System.out.println("\nINCLUSÃO DE TAREFA");
       System.out.print("Código Republica: ");
       codigoRepublica = Integer.valueOf(console.nextLine());
@@ -576,8 +576,8 @@ public class ControleDeRepublicas
       descricao = console.nextLine();
       System.out.print("Data..........: ");
       tempoLimite = console.nextLine();
-
-
+   
+   
       System.out.print("\nConfirma inclusão? ");
       char confirma = console.nextLine().charAt(0);
       if(confirma=='s' || confirma=='S') {
@@ -627,43 +627,43 @@ public class ControleDeRepublicas
    public static void alterarTarefa( ) throws Exception
    {
       System.out.println("\nALTERAÇÃO");
-
+   
       int codigo;
       System.out.print("Código: ");
-
+   
       codigo = Integer.valueOf(console.nextLine());
-
+   
       if(codigo <= 0)
          return;
-
+   
       Tarefas r;
-
+   
       if((r = (Tarefas)arqTarefas.buscarCodigo(codigo))!=null)
       {
          System.out.println(r);
-
+      
          String nomeTarefa, descricao, tempoLimite, realizado;
-
+      
          System.out.println("\nINCLUSÃO (Para mudar os responsaveis excluir e incluir uma nova Tarefa) :");
-
+      
          System.out.print("Novo Nome da Tarefa: ");
          nomeTarefa = console.nextLine();
-
+      
          System.out.print("Novo Descricao: ");
          descricao = console.nextLine();
-
+      
          System.out.println("Novo Tempo Limite : ");
          tempoLimite = console.nextLine();
-
+      
          System.out.print("\nConfirma alteração? ");
          char confirma = console.nextLine().charAt(0);
-
+      
          if(confirma=='s' || confirma=='S')
          {
             r.nomeTarefa  = (nomeTarefa.length()>0? nomeTarefa: r.nomeTarefa);
             r.descricao   = (descricao.length() >0? descricao: r.descricao);
             r.tempoLimite = (tempoLimite.length( ) > 0? tempoLimite: r.tempoLimite);
-
+         
             if(arqTarefas.alterar(r))
                System.out.println("Tarefa alterada.");
             else
@@ -677,21 +677,21 @@ public class ControleDeRepublicas
    public static void excluirTarefa( ) throws Exception
    {
       System.out.println("\nEXCLUSÃO");
-
+   
       int codigo;
       System.out.print("Código: ");
       codigo = Integer.valueOf(console.nextLine());
-
+   
       if(codigo <= 0)
          return;
-
+   
       Tarefas r;
       if((r = (Tarefas)arqTarefas.buscarCodigo(codigo))!=null)
       {
          System.out.println(r);
          System.out.print("\nConfirma exclusão? ");
          char confirma = console.nextLine().charAt(0);
-
+      
          if(confirma=='s' || confirma=='S')
          {
             if( arqTarefas.excluir(codigo) )
@@ -707,16 +707,16 @@ public class ControleDeRepublicas
    public static void buscarTarefaCodigo( ) throws Exception
    {
       System.out.println("\nBUSCA POR CÓDIGO");
-
+   
       int codigo;
       System.out.print("Código: ");
       codigo = Integer.valueOf(console.nextLine());
-
+   
       if(codigo <= 0)
          return;
-
+   
       Tarefas r;
-
+   
       if((r = (Tarefas)arqTarefas.buscarCodigo(codigo))!=null)
          System.out.println(r);
       else
@@ -726,17 +726,17 @@ public class ControleDeRepublicas
    public static void buscarTarefaDescricao( ) throws Exception
    {
       System.out.println("\nBUSCA POR DESCRICAO");
-
+   
       String descricao;
       System.out.print("Descricao: ");
-
+   
       descricao = console.nextLine();
-
+   
       if(descricao == "")
          return;
-
+   
       Tarefas r;
-
+   
       if((r = (Tarefas)arqTarefas.buscarString(descricao))!=null)
          System.out.println(r);
       else
@@ -762,17 +762,17 @@ public class ControleDeRepublicas
    public static void listarUsuariosRepublica() throws Exception
    {
       System.out.println("\nLISTA DE USUARIOS POR REPUBLICA");
-
+   
       int codigo;
       System.out.print("Código da republica: ");
       codigo = Integer.valueOf(console.nextLine());
-
+   
       if(codigo <= 0)
          return;
-
+   
       int[] lista = idxRepublicaUsuario.lista(codigo);
       Usuario obj;
-
+   
       for(int i = 0; i < lista.length; i++)
       {
          if((obj = (Usuario)arqUsuarios.buscarCodigo(lista[i])) != null)
@@ -791,17 +791,17 @@ public class ControleDeRepublicas
    public static void listarUsuariosTarefa() throws Exception
    {
       System.out.println("\nLISTA DE USUARIOS POR TAREFA");
-
+   
       int codigo;
       System.out.print("Código da tarefa: ");
       codigo = Integer.valueOf(console.nextLine());
-
+   
       if(codigo <= 0)
          return;
-
+   
       int[] lista = idxUsuarioTarefas.lista(codigo);
       Usuario obj;
-
+   
       for(int i = 0; i < lista.length; i++)
       {
          if((obj = (Usuario)arqUsuarios.buscarCodigo(lista[i])) != null)
@@ -820,15 +820,15 @@ public class ControleDeRepublicas
 // Metodos a fazer
    public static void listarTarefasUsuario() throws Exception
    {
-
+   
       System.out.println("\nLISTA DE TAREFAS POR USUARIO");
-
+   
       int codigo;
       System.out.print("Código do usuario: ");
       codigo = Integer.valueOf(console.nextLine());
       if(codigo <=0)
          return;
-
+   
       int[] lista = idxTarefasUsuario.lista(codigo);
       Tarefas obj;
       for(int i=0; i<lista.length; i++) {
@@ -837,20 +837,20 @@ public class ControleDeRepublicas
          else
             System.out.println("Tarefa não encontrada");
       }
-
+   
    }// end listarTarefasUsuario( )
 
    public static void listarTarefasRepublica() throws Exception
    {
-
+   
       System.out.println("\nLISTA DE TAREFAS DE UMA REPUBLICA");
-
+   
       int codigo;
       System.out.print("Código da Republica: ");
       codigo = Integer.valueOf(console.nextLine());
       if(codigo <=0)
          return;
-
+   
       int[] lista = idxRepublicaTarefas.lista(codigo);
       Tarefas obj;
       for(int i=0; i<lista.length; i++) {
@@ -859,17 +859,17 @@ public class ControleDeRepublicas
          else
             System.out.println("Tarefa não encontrada");
       }
-
+   
    }// end listarTarefasRepublica( )
 
    public static void reorganizarGastos() throws Exception
    {
-
+   
    }// end reorganizarGastos( )
 
    public static void listarGastosRepublica()
    {
-
+   
    }// end listarGastosRepublica( )
 
 // Povoar
@@ -888,6 +888,6 @@ public class ControleDeRepublicas
 
    public static void compressaoDeDados()
    {
-
+   
    }
 }// end class ControleDeRepublicas
