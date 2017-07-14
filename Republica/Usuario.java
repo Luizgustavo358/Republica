@@ -68,9 +68,9 @@ public class Usuario implements Registro
 
    public String toString( )
    {
-      return "\nCodigo.........:" + idUsuario +
-             "\nNome...........:" + nome      +
-             "\nEmail..........:" + email     +
+      return "\nCodigo.........:" + idUsuario  +
+             "\nNome...........:" + nome       +
+             "\nEmail..........:" + email      +
              "\nSenha..........:" + getSenha() +
              "\nRepublica......:" + idRepublica;
    }// end toString( )
