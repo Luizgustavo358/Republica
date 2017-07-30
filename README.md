@@ -23,8 +23,8 @@ Trabalho de cadastramento de Repúblicas e divisão de tarefas entre os usuário
 
 ### Como Executar no Terminal
 ```sh
-$ javac ControleDeRepublicas.java
-$ java ControleDeRepublicas
+$javac ControleDeRepublicas.java
+$java ControleDeRepublicas
 ```
 
 ### Programa Rodando
